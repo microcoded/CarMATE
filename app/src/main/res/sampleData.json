@@ -1,0 +1,40 @@
+[
+  {
+    "brand": "Toyota",
+    "model": "RAV4",
+    "year": "2016",
+    "color": "red",
+    "type": "SUV"
+  },
+  {
+    "brand": "Mitsubishi",
+    "model": "Lancer",
+    "year": "2010",
+    "color": "grey",
+    "type": "sedan"
+  },
+  {
+    "brand": "Chrysler",
+    "model": "300c",
+    "year": "2018",
+    "color": "grey",
+    "type": "sedan"
+  },
+  {
+    "brand": "Toyota",
+    "model": "Corolla",
+    "year": "2016",
+    "color": "white",
+    "type": "sedan"
+  },
+  {
+    "brand": "Tesla",
+    "model": "X",
+    "year": "2017",
+    "color": "blue",
+    "type": "SUV"
+  },
+  {
+
+  }
+]
