@@ -2,39 +2,49 @@
   {
     "brand": "Toyota",
     "model": "RAV4",
-    "year": "2016",
+    "year": 2016,
     "color": "red",
-    "type": "SUV"
+    "type": "SUV",
+    "price": 27798
   },
   {
     "brand": "Mitsubishi",
     "model": "Lancer",
-    "year": "2010",
+    "year": 2010,
     "color": "grey",
-    "type": "sedan"
+    "type": "sedan",
+    "price": 10999
   },
   {
     "brand": "Chrysler",
     "model": "300c",
-    "year": "2018",
+    "year": 2018,
     "color": "grey",
-    "type": "sedan"
+    "type": "sedan",
+    "price": 62985
   },
   {
     "brand": "Toyota",
     "model": "Corolla",
-    "year": "2016",
+    "year": 2007,
     "color": "white",
-    "type": "sedan"
+    "type": "sedan",
+    "price": 9999
   },
   {
     "brand": "Tesla",
     "model": "X",
-    "year": "2017",
+    "year": 2017,
     "color": "blue",
-    "type": "SUV"
+    "type": "SUV",
+    "price": 88888
   },
   {
-
+    "brand": "Honda",
+    "model": "CR-V",
+    "year": 2007,
+    "color": "blue",
+    "type": "SUV",
+    "price": 10001
   }
 ]
