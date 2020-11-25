@@ -46,5 +46,21 @@
     "color": "blue",
     "type": "SUV",
     "price": 10001
+  },
+  {
+    "brand": "Toyota",
+    "model": "GXL",
+    "year": 2016,
+    "color": "black",
+    "type": "4WD",
+    "price": 35000
+  },
+  {
+    "brand": "Tesla",
+    "model": "S",
+    "year": 2020,
+    "color": "red",
+    "type": "sedan",
+    "price": 135420
   }
 ]
