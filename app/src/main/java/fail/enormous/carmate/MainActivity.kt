@@ -1,6 +1,6 @@
 package fail.enormous.carmate
 
-import RecyclerAdapter
+import fail.enormous.carmate.RecyclerAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
+        this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
 
         // use this setting to improve performance if you know that changes
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         val builder = StringBuilder()
         try {
             var jsonString: String? = null
-            inputStream = resources.openRawResource(R.raw.carlist)
+            inputStream = resources.openRawResource(R.raw.sample_data)
             val bufferedReader = BufferedReader(
                 InputStreamReader(inputStream, "UTF-8")
             )

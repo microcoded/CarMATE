@@ -14,13 +14,12 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="match_parent"
-            android:text="Brand"
-            android:textStyle="bold"
             android:id="@+id/brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brand"
             android:textSize="28sp"
-            android:textColor="@android:color/black"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
