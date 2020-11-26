@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">CarMATE</string>
+    <string name="app_name" translatable="false">CarMATE</string>
+    <string name="year_title">Year:</string>
+    <string name="color_title">Colour:</string>
+    <string name="type_title">Type:</string>
+    <string name="price_title">Price:</string>
 </resources>

@@ -21,21 +21,22 @@ class MainActivity : AppCompatActivity() {
     private val viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+       /* TODO: Check if this setting improves performance and doesn't cause bugs
         mRecyclerView!!.setHasFixedSize(true)
+        */
 
-        // use a linear layout manager
+        // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)
         mRecyclerView!!.layoutManager = layoutManager
 
-        // specify an adapter (see also next example)
+        // Specifying adapter
         mAdapter = RecyclerAdapter(this, viewItems)
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
@@ -56,11 +57,16 @@ class MainActivity : AppCompatActivity() {
                 val carlist = CarList(brand, model, year, color, type, price)
                 viewItems.add(carlist)
             }
-        } catch (e: JSONException) {
-            Log.d(TAG, "addItemsFromJSON: ", e)
-        } catch (e: IOException) {
+        }
+
+        // Error handling and debugging
+        catch (e: JSONException) {
             Log.d(TAG, "addItemsFromJSON: ", e)
         }
+        catch (e: IOException) {
+            Log.d(TAG, "addItemsFromJSON: ", e)
+        }
+
     }
 
     @Throws(IOException::class)
@@ -70,9 +76,7 @@ class MainActivity : AppCompatActivity() {
         try {
             var jsonString: String? = null
             inputStream = resources.openRawResource(R.raw.sample_data)
-            val bufferedReader = BufferedReader(
-                InputStreamReader(inputStream, "UTF-8")
-            )
+            val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             while (bufferedReader.readLine().also { jsonString = it } != null) {
                 builder.append(jsonString)
             }
@@ -82,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         return String(builder)
     }
 
+    // I don't remember what this does but I don't want to destroy CarMATE so this will stay!
     companion object {
         private const val TAG = "MainActivity"
     }
