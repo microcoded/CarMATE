@@ -33,7 +33,7 @@
   },
   {
     "brand": "Tesla",
-    "model": "X",
+    "model": "Model X",
     "year": 2017,
     "color": "blue",
     "type": "SUV",
@@ -57,7 +57,7 @@
   },
   {
     "brand": "Tesla",
-    "model": "S",
+    "model": "Model S",
     "year": 2020,
     "color": "red",
     "type": "sedan",

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="year_title">年：</string>
-    <string name="color_title">色：</string>
+    <string name="year_title">年：%1$s</string>
+    <string name="color_title">色：%1$s</string>
+    <string name="type_title">型：%1$s</string>
+    <string name="price_title">値段：%1$s</string>
 </resources>

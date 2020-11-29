@@ -7,160 +7,50 @@
     android:layout_margin="5dp"
     android:layout_height="wrap_content">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp">
 
-        <TableRow
+        <TextView
+            android:id="@+id/brand"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp">
+            android:layout_height="wrap_content"
+            android:text="Brand Model"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/brand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Brand"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/space1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Model"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/year"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+            android:layout_height="wrap_content"
+            android:text="@string/year_title"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/year_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/year_title"
-                android:textSize="23sp" />
-
-            <TextView
-                android:id="@+id/space2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$year"
-                android:textSize="23sp" />
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/color"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+            android:layout_height="wrap_content"
+            android:text="@string/color_title"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/color_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/color_title"
-                android:textSize="23sp" />
-
-            <TextView
-                android:id="@+id/space3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/color"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$color"
-                android:textSize="23sp" />
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/type"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+            android:layout_height="wrap_content"
+            android:text="@string/type_title"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/type_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/type_title"
-                android:textSize="23sp" />
-
-            <TextView
-                android:id="@+id/space4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$type"
-                android:textSize="23sp" />
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/price"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp">
+            android:layout_height="wrap_content"
+            android:text="@string/price_title"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/price_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/price_title"
-                android:textSize="23sp" />
-
-            <TextView
-                android:id="@+id/space5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$price"
-                android:textSize="23sp" />
-        </TableRow>
-    </TableLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
