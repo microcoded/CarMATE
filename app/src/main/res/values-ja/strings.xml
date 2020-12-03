@@ -4,4 +4,8 @@
     <string name="color_title">色：%1$s</string>
     <string name="type_title">型：%1$s</string>
     <string name="price_title">値段：%1$s</string>
+    <string name="sort">並べ替え</string>
+    <string name="sold">売上高</string>
+    <string name="select">選ぶ</string>
+    <string name="select_sort">ソートを選んでください</string>
 </resources>

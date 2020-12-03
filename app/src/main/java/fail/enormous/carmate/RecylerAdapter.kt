@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerAdapter(private val context: Context, private val listRecyclerItem: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // Setting values for all the TextViews
         val brand: TextView = itemView.findViewById<View>(R.id.brand) as TextView
         // val model: TextView = itemView.findViewById<View>(R.id.model) as TextView
         val year: TextView = itemView.findViewById<View>(R.id.year) as TextView
@@ -40,11 +41,13 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
         when (viewType) {
             TYPE -> {
                 val itemViewHolder = viewHolder as ItemViewHolder
+                // Get CarList as array
                 val carlist: CarList = listRecyclerItem[i] as CarList
+                // Set text to display accordingly, formatting with capitalisation and dollar signs where relevant.
                 itemViewHolder.brand.setText(carlist.brand + " " + carlist.model)
                 itemViewHolder.year.setText(context.getString(R.string.year_title, carlist.year))
-                itemViewHolder.color.setText(context.getString(R.string.color_title, capitaliseString(carlist.color)))
-                itemViewHolder.type.setText(context.getString(R.string.type_title, capitaliseString(carlist.type)))
+                itemViewHolder.color.setText(context.getString(R.string.color_title, carlist.color.capitalize()))
+                itemViewHolder.type.setText(context.getString(R.string.type_title, carlist.type.capitalize()))
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
                 /* itemViewHolder.brand.setText(carlist.brand)
                 itemViewHolder.model.setText(carlist.model)
@@ -58,15 +61,9 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
                 val carlist: CarList = listRecyclerItem[i] as CarList
                 itemViewHolder.brand.setText(carlist.brand + " " + carlist.model)
                 itemViewHolder.year.setText(context.getString(R.string.year_title, carlist.year))
-                itemViewHolder.color.setText(context.getString(R.string.color_title, capitaliseString(carlist.color)))
-                itemViewHolder.type.setText(context.getString(R.string.type_title, capitaliseString(carlist.type)))
+                itemViewHolder.color.setText(context.getString(R.string.color_title, carlist.color.capitalize()))
+                itemViewHolder.type.setText(context.getString(R.string.type_title, carlist.type.capitalize()))
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
-                /* itemViewHolder.brand.setText(carlist.brand)
-                itemViewHolder.model.setText(carlist.model)
-                itemViewHolder.year.setText(carlist.year)
-                itemViewHolder.color.setText(carlist.color)
-                itemViewHolder.type.setText(carlist.type)
-                itemViewHolder.price.setText(carlist.price) */
             }
         }
     }
@@ -75,7 +72,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
         return listRecyclerItem.size
     }
 
-    private fun capitaliseString(str: String): String {
+    /* private fun capitaliseString(str: String): String {
         var stringy = str
         try {
             stringy = str.substring(0, 1).toUpperCase() + str.substring(1) // Make first letter a capital
@@ -84,7 +81,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
             // If string is null, index out of bounds exception is caught
         }
         return stringy
-    }
+    } */
 
     companion object {
         private const val TYPE = 1

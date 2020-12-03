@@ -1,9 +1,13 @@
 package fail.enormous.carmate
 
-import fail.enormous.carmate.RecyclerAdapter
+import android.app.ActivityOptions
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,9 +32,8 @@ class MainActivity : AppCompatActivity() {
         this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
 
-       /* TODO: Check if this setting improves performance and doesn't cause bugs
-        mRecyclerView!!.setHasFixedSize(true)
-        */
+        // TODO: Check if this setting improves performance and doesn't cause bugs
+        // mRecyclerView!!.setHasFixedSize(true)
 
         // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)
@@ -75,14 +78,20 @@ class MainActivity : AppCompatActivity() {
         val builder = StringBuilder()
         try {
             var jsonString: String? = null
+            // Open the JSON file
             inputStream = resources.openRawResource(R.raw.sample_data)
+            // Reading the file
             val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             while (bufferedReader.readLine().also { jsonString = it } != null) {
+                // Appending string information from the file to the builder
                 builder.append(jsonString)
             }
-        } finally {
+        }
+        finally {
+            // Close file once finished
             inputStream?.close()
         }
+        // Return the string
         return String(builder)
     }
 
@@ -90,4 +99,44 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MainActivity"
     }
+
+    // When the SOLD button is pressed
+    fun soldButtonPress(view: View) {
+        // startActivity(Intent(this, SoldActivity::class.java))
+        startActivity()
+    }
+
+    // When the SORT button is pressed
+    fun sortButtonPress(view: View) {
+        // Array of values to display in the list
+        val listItems = arrayOf("Bubble", "Selection", "Insertion")
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        // The title of the dialogue box
+        builder.setTitle(R.string.select_sort)
+        // Set the selected item to the first in the list, as a default
+        var checkedItem = 0
+
+        // Do something when an item is pressed
+        builder.setSingleChoiceItems(listItems, checkedItem, DialogInterface.OnClickListener { dialog, which ->
+            // Toast.makeText(this, "Position: " + which + " Value: " + listItems[which], Toast.LENGTH_LONG).show()
+
+        }  )
+
+        // Do something when dialogue is confirmed
+        builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
+        }   )
+        // Display the dialogue
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    fun startActivity() {
+        val i = Intent(this, SoldActivity::class.java)
+        val options = ActivityOptions.makeSceneTransitionAnimation(this)
+        startActivity(i, options.toBundle())
+    }
+
+
+
 }
