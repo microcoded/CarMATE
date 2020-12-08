@@ -15,5 +15,6 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/white</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:buttonTint">@color/pimk</item>
     </style>
 </resources>

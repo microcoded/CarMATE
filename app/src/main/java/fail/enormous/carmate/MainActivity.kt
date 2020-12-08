@@ -137,6 +137,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(i, options.toBundle())
     }
 
+    fun addButtonPress(view: View) {
+        // TODO: Goto an add activity which adds entries to the JSON file.
+    }
 
 
 }
