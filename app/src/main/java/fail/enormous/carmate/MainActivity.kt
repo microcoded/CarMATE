@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             var jsonString: String? = null
             // Open the JSON file
             inputStream = resources.openRawResource(R.raw.sample_data)
+            // resources.openRawResource(R.raw.sample_data).also { inputStream = it }
             // Reading the file
             val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             while (bufferedReader.readLine().also { jsonString = it } != null) {
@@ -135,10 +136,14 @@ class MainActivity : AppCompatActivity() {
         val i = Intent(this, SoldActivity::class.java)
         val options = ActivityOptions.makeSceneTransitionAnimation(this)
         startActivity(i, options.toBundle())
+        // setContentView(R.layout.activity_sold)
     }
 
     fun addButtonPress(view: View) {
         // TODO: Goto an add activity which adds entries to the JSON file.
+        val i = Intent(this, AddActivity::class.java)
+        val options = ActivityOptions.makeSceneTransitionAnimation(this)
+        startActivity(i, options.toBundle())
     }
 
 
