@@ -3,6 +3,7 @@ package fail.enormous.carmate
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -13,6 +14,7 @@ import android.widget.Toast
 import java.util.*
 
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+    var arrPos: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAnimation()
@@ -49,13 +51,14 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?,
                                 view: View, position: Int,
-                                id: Long) {
+                                id: Long): Int {
 
         // Do to item if position selected is not the default (blank value)
         if (position != 0) {
             // Set value of name selected in lowercase
-            var type: String = resources.getStringArray(R.array.type_array)[position].toLowerCase(Locale.ROOT) // tolowercase in English because it's technically better to do so
-            return type
+            // var cartype: String = resources.getStringArray(R.array.type_array)[position].toLowerCase(Locale.ROOT) // tolowercase in English because it's technically better to do so
+            var arrPos = position
+            return arrPos
         }
     }
 
@@ -64,6 +67,6 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     fun doneButtonPress(view: View) {
-        
+        Log.d(resources.getStringArray(R.array.type_array)[this.position])
     }
 }
