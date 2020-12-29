@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import java.util.*
 
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +30,6 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     fun fillSpinner() {
-        /* From Android Developers documentation
-        val spinner: Spinner = findViewById(R.id.type_spinner)
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter.createFromResource(this, R.array.type_array, android.R.layout.simple_spinner_item).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner.adapter = adapter
-        } */
 
         val spinner = findViewById<Spinner>(R.id.type_spinner)
         spinner.onItemSelectedListener = this
@@ -61,17 +53,17 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // Do to item if position selected is not the default (blank value)
         if (position != 0) {
-            // Toast of name selected
-            Toast.makeText(
-                applicationContext,
-                resources.getStringArray(R.array.type_array)[position],
-                Toast.LENGTH_LONG
-            )
-                .show()
+            // Set value of name selected in lowercase
+            var type: String = resources.getStringArray(R.array.type_array)[position].toLowerCase(Locale.ROOT) // tolowercase in English because it's technically better to do so
+            return type
         }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
         // Do nothing
+    }
+
+    fun doneButtonPress(view: View) {
+        
     }
 }
