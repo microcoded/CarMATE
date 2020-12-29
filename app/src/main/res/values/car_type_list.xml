@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_array">
+        <item> </item>
+        <item>4WD</item>
+        <item>Convertible</item>
+        <item>Hatchback</item>
+        <item>Minivan</item>
+        <item>Sedan</item>
+        <item>SUV</item>
+        <item>Wagon</item>
+    </string-array>
+</resources>

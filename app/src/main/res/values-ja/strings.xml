@@ -9,4 +9,11 @@
     <string name="select">選ぶ</string>
     <string name="select_sort">ソートを選んでください</string>
     <string name="add">足す</string>
+    <string name="brand">" ブランド"</string>
+    <string name="model">型</string>
+    <string name="year">年</string>
+    <string name="color">色</string>
+    <string name="type">タイプ</string>
+    <string name="price">価格($)</string>
+    <string name="done">終わった</string>
 </resources>
