@@ -124,7 +124,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // val gson = Gson()
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carsList)
-        File("/sdcard/cardata.json").appendText(newCarInfo)
+        File("/sdcard/cardata.json").writeText(newCarInfo)
         return true
     }
 
