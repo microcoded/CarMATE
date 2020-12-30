@@ -106,7 +106,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             return true
         }
         catch (t: Throwable) {
-            Log.d("Error:", t.toString())
+            Log.w("Error:", t.toString())
             return false
         }
     }
@@ -125,7 +125,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val gson = Gson()
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carsList)
-        File("sample_data.json").appendText(newCarInfo)
+        File("cardata.json").appendText(newCarInfo)
         return true
     }
 
