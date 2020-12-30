@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -140,11 +139,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addButtonPress(view: View) {
-        // TODO: Goto an add activity which adds entries to the JSON file.
         val i = Intent(this, AddActivity::class.java)
         val options = ActivityOptions.makeSceneTransitionAnimation(this)
         startActivity(i, options.toBundle())
     }
 
+    override fun onBackPressed() {
+        val gohome = Intent(Intent.ACTION_MAIN)
+        gohome.addCategory(Intent.CATEGORY_HOME)
+        gohome.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(gohome)
+    }
 
 }
