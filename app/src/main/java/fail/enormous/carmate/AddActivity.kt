@@ -112,7 +112,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: Float): Boolean {
-        // TODO: function to append data to JSON file
+        // TODO: finish function to append data to JSON file
         // Files.write(R.raw.sample_data, 1024, StandardOpenOption.APPEND)
         val carsList: List<Any> = listOf(
                 brand,
