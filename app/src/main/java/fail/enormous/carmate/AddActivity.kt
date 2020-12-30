@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.io.File
 
@@ -122,10 +121,10 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 type,
                 price
         )
-        val gson = Gson()
+        // val gson = Gson()
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carsList)
-        File("cardata.json").appendText(newCarInfo)
+        File("/sdcard/cardata.json").appendText(newCarInfo)
         return true
     }
 
