@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONArray
 import org.json.JSONException
-import java.io.BufferedReader
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.util.*
 
 
@@ -52,10 +52,10 @@ class MainActivity : AppCompatActivity() {
                 val itemObj = jsonArray.getJSONObject(i)
                 val brand = itemObj.getString("brand")
                 val model = itemObj.getString("model")
-                val year = itemObj.getString("year")
+                val year = itemObj.getInt("year")
                 val color = itemObj.getString("color")
                 val type = itemObj.getString("type")
-                val price = itemObj.getString("price")
+                val price = itemObj.getDouble("price")
                 val carlist = CarList(brand, model, year, color, type, price)
                 viewItems.add(carlist)
             }
@@ -76,15 +76,26 @@ class MainActivity : AppCompatActivity() {
         var inputStream: InputStream? = null
         val builder = StringBuilder()
         try {
+            val fileName = "carlist.json"
+            val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+            if (storageDir != null) {
+                if (!storageDir.exists()){
+
+                }
+            }
             var jsonString: String? = null
+            //inputStream =
+            val bufferedReader = File(storageDir, fileName).bufferedReader()
             // Open the JSON file
-            inputStream = resources.openRawResource(R.raw.sample_data)
+            //inputStream = resources.openRawResource(R.raw.sample_data)
             // resources.openRawResource(R.raw.sample_data).also { inputStream = it }
             // Reading the file
-            val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+            //val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             while (bufferedReader.readLine().also { jsonString = it } != null) {
                 // Appending string information from the file to the builder
+                    Log.w("while loop", jsonString)
                 builder.append(jsonString)
+                Log.w("while loop", jsonString)
             }
         }
         finally {

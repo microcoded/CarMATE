@@ -2,7 +2,7 @@
   {
     "brand": "Toyota",
     "model": "RAV4",
-    "year": "2016",
+    "year": 2016,
     "color": "red",
     "type": "SUV",
     "price": 27798
