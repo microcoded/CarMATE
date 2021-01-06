@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.transition.Slide
 import android.util.Log
 import android.view.Gravity
@@ -15,7 +16,10 @@ import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.GsonBuilder
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.io.Writer
 
 
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -110,10 +114,11 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: Float): Boolean {
+    fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: Float) {
         // TODO: finish function to append data to JSON file
-        // Files.write(R.raw.sample_data, 1024, StandardOpenOption.APPEND)
-        val carsList: List<Any> = listOf(
+        //Files.write(R.raw.sample_data, 1024, StandardOpenOption.APPEND)
+        //Files.write("cardata.json", 1024, StandardOpenOption.APPEND)
+        /*val carsList: List<Any> = listOf(
                 brand,
                 model,
                 year,
@@ -124,8 +129,45 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // val gson = Gson()
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carsList)
-        File("/sdcard/cardata.json").writeText(newCarInfo)
-        return true
+        File("cardata.json").writeText(newCarInfo)
+        return true */
+        //var json = JSONObject()
+
+        val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
+        /*json.put("", JSONArray()
+                .put(brand)
+                .put(model)
+                .put(year)
+                .put(color)
+                .put(type)
+                .put(price))
+        saveJSON(json.toString())*/
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val newCarInfo: String = gsonPretty.toJson(carlist)
+        saveJSON(newCarInfo)
+    }
+
+    fun saveJSON(jsonString: String) {
+        val output: Writer
+        val file = createFile()
+        output = BufferedWriter(FileWriter(file))
+        output.write(jsonString)
+        output.close()
+    }
+
+    private fun createFile(): File {
+        val fileName = "carlist"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        if (storageDir != null) {
+            if (!storageDir.exists()){
+                storageDir.mkdir()
+            }
+        }
+        return File.createTempFile(
+                fileName,
+                ".json",
+                storageDir
+        )
     }
 
     fun goToMainActivity() {
