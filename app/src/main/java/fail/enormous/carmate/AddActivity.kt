@@ -123,8 +123,11 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
         // Put data into JSON array, with love from https://stackoverflow.com/questions/65591615/how-do-i-output-data-as-a-json-array-in-kotlin-on-android
+        // After reading comments, I wrote my own answer to my question on this site.
 
-        var carlist = listOf(CarList(brand, model, year, color, type, price))
+        var carlist = listOf(
+                CarList(brand, model, year, color, type, price)
+        )
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
         saveJSON(newCarInfo)
@@ -139,10 +142,12 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun createFile(): File {
+        // Save as carlist.json in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
         val fileName = "carlist.json"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         if (storageDir != null) {
             if (!storageDir.exists()){
+                // Make folder if nonexistent
                 storageDir.mkdir()
             }
         }
