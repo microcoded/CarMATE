@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             //val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             while (bufferedReader.readLine().also { jsonString = it } != null) {
                 // Appending string information from the file to the builder
-                    Log.w("while loop", jsonString)
                 builder.append(jsonString)
                 Log.w("while loop", jsonString)
             }
@@ -101,8 +100,10 @@ class MainActivity : AppCompatActivity() {
         finally {
             // Close file once finished
             inputStream?.close()
+            Log.w("string builder", String(builder))
         }
         // Return the string
+        Log.w("string builder", String(builder))
         return String(builder)
     }
 
