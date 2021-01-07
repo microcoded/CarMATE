@@ -116,7 +116,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: Double) {
-        // TODO: finish function to append data to JSON file
+        // TODO: make this function not wipe the JSON file but instead add to it.
 
         // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
        // var carlist: CarList = CarList(brand, model, year, color, type, price)
