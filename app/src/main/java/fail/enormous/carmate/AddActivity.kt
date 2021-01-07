@@ -119,7 +119,8 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // TODO: finish function to append data to JSON file
 
         // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
-        var carlist: CarList = CarList(brand, model, year, color, type, price)
+       // var carlist: CarList = CarList(brand, model, year, color, type, price)
+        var carlist = listOf(CarList(brand, model, year, color, type, price))
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
         saveJSON(newCarInfo)
