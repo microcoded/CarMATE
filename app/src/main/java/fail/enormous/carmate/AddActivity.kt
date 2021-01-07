@@ -96,7 +96,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             // Grabbing data from input
             val brandContent = brandInput.text.toString().toLowerCase().capitalize()
-            val modelContent = modelInput.text.toString().toLowerCase().capitalize()
+            val modelContent = modelInput.text.toString()
             val yearContent = yearInput.text.toString().toInt()
             val colorContent = colorInput.text.toString().toLowerCase()
             val typeContent = typeInput.selectedItem.toString()
@@ -120,6 +120,10 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
        // var carlist: CarList = CarList(brand, model, year, color, type, price)
+
+
+        // Put data into JSON array, with love from https://stackoverflow.com/questions/65591615/how-do-i-output-data-as-a-json-array-in-kotlin-on-android
+
         var carlist = listOf(CarList(brand, model, year, color, type, price))
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
