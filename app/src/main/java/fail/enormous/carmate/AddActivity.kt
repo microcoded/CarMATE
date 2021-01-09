@@ -20,7 +20,7 @@ import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
 import java.io.Writer
-
+import java.math.BigDecimal
 
 
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -100,7 +100,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val yearContent = yearInput.text.toString().toInt()
             val colorContent = colorInput.text.toString().toLowerCase()
             val typeContent = typeInput.selectedItem.toString()
-            val priceContent = priceInput.text.toString().toDouble()
+            val priceContent = priceInput.text.toString().toBigDecimal()
 
             Log.w("Content", "$brandContent, $modelContent, $yearContent, $colorContent, $typeContent, $priceContent")
 
@@ -115,7 +115,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: Double) {
+    fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal) {
         // TODO: make this function not wipe the JSON file but instead add to it.
 
         // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
