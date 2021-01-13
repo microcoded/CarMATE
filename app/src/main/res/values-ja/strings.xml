@@ -16,4 +16,7 @@
     <string name="type">タイプ</string>
     <string name="price">価格($)</string>
     <string name="done">終わった</string>
+    <string name="add_button">足すボタン</string>
+    <string name="app_name" translatable="false">カーメイト</string>
+    <string name="search">探索</string>
 </resources>

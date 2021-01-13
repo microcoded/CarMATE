@@ -11,7 +11,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import fail.enormous.carmate.RecyclerItemClickListener.SimpleOnItemClickListener
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
@@ -43,14 +42,7 @@ class MainActivity : AppCompatActivity() {
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
 
-        // Check RecyclerItemClickListener.java for the source of this code
-        mRecyclerView!!.addOnItemTouchListener(RecyclerItemClickListener(this, OnItemClickListener()))
-    }
-
-    private class OnItemClickListener : SimpleOnItemClickListener() {
-        override fun onItemClick(childView: View, position: Int) {
-            Log.w("RecyclerView Click", "pos = $position")
-        }
+        // TODO: on clicking an item on recyclerview
     }
 
     private fun addItemsFromJSON() {
@@ -166,6 +158,10 @@ class MainActivity : AppCompatActivity() {
         gohome.addCategory(Intent.CATEGORY_HOME)
         gohome.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(gohome)
+    }
+
+    fun searchButtonPress(view: View) {
+
     }
 
 }

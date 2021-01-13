@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">CarMATE</string>
+    <string name="app_name">CarMATE</string>
     <string name="year_title">Year: %1$s</string>
     <string name="color_title">Colour: %1$s</string>
     <string name="type_title">Type: %1$s</string>
@@ -21,4 +21,6 @@
     <string name="type">Type</string>
     <string name="price">Price ($)</string>
     <string name="done">Done</string>
+    <string name="add_button">add button</string>
+    <string name="search">Search</string>
 </resources>
