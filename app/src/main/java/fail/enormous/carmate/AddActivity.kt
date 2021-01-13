@@ -22,7 +22,6 @@ import java.io.FileWriter
 import java.io.Writer
 import java.math.BigDecimal
 
-
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var position: Int = 0
     var isEmpty: Boolean = true
@@ -119,7 +118,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // TODO: make this function not wipe the JSON file but instead add to it.
 
         // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
-       // var carlist: CarList = CarList(brand, model, year, color, type, price)
+        // var carlist: CarList = CarList(brand, model, year, color, type, price)
 
 
         // Put data into JSON array, with love from https://stackoverflow.com/questions/65591615/how-do-i-output-data-as-a-json-array-in-kotlin-on-android
@@ -158,7 +157,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         )
     }
 
-    fun goToMainActivity() {
+    private fun goToMainActivity() {
         val i = Intent(this, MainActivity::class.java)
         val options = ActivityOptions.makeSceneTransitionAnimation(this)
         startActivity(i, options.toBundle())
