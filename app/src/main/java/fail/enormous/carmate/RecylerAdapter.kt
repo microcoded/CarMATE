@@ -1,7 +1,6 @@
 package fail.enormous.carmate
 
 import android.content.Context
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +41,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
             TYPE -> {
                 val itemViewHolder = viewHolder as ItemViewHolder
                 // Get CarList as array
-                val carlist: CarList = listRecyclerItem[i] as CarList
+                val carlist: Car = listRecyclerItem[i] as Car
                 // Set text to display accordingly, formatting with capitalisation and dollar signs where relevant.
                 itemViewHolder.brand.setText(carlist.brand + " " + carlist.model)
                 itemViewHolder.year.setText(context.getString(R.string.year_title, carlist.year))
@@ -58,7 +57,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
             }
             else -> {
                 val itemViewHolder = viewHolder as ItemViewHolder
-                val carlist: CarList = listRecyclerItem[i] as CarList
+                val carlist: Car = listRecyclerItem[i] as Car
                 itemViewHolder.brand.setText(carlist.brand + " " + carlist.model)
                 itemViewHolder.year.setText(context.getString(R.string.year_title, carlist.year))
                 itemViewHolder.color.setText(context.getString(R.string.color_title, carlist.color.capitalize()))

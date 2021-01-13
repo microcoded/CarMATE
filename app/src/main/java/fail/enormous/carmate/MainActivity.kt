@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 val color = itemObj.getString("color")
                 val type = itemObj.getString("type")
                 val price = itemObj.getDouble("price").toBigDecimal()
-                val carlist = CarList(brand, model, year, color, type, price)
+                val carlist = Car(brand, model, year, color, type, price)
                 viewItems.add(carlist)
             }
         }

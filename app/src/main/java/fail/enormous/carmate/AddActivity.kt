@@ -126,7 +126,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // After reading comments, I wrote my own answer to my question on this site.
 
         var carlist = listOf(
-                CarList(brand, model, year, color, type, price)
+                Car(brand, model, year, color, type, price)
         )
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
