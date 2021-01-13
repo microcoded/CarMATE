@@ -127,7 +127,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         // Convert JSON data to Kotlin array
         var cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
-        cars.forEachIndexed { idx, car -> Log.w("Data2", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+        cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
 
     }
 
