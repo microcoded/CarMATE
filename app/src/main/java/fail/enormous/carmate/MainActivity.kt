@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
             if (storageDir != null) {
                 if (!storageDir.exists()){
-
+                    storageDir.mkdir()
                 }
             }
             var jsonString: String? = null
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         return String(builder)
     }
 
-    // I don't remember what this does but I don't want to destroy CarMATE so this will stay!
+    // Tags for error handling
     companion object {
         private const val TAG = "MainActivity"
     }
