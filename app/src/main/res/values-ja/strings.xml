@@ -19,4 +19,6 @@
     <string name="add_button">足すボタン</string>
     <string name="app_name" translatable="false">カーメイト</string>
     <string name="search">探索</string>
+    <string name="random">乱数列</string>
+    <string name="generate_random_number">乱数を生成する</string>
 </resources>

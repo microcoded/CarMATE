@@ -164,4 +164,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun randomButtonPress(view: View) {
+        startActivity(Intent(this, RandomActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+    }
+
 }

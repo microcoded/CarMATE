@@ -23,4 +23,6 @@
     <string name="done">Done</string>
     <string name="add_button">add button</string>
     <string name="search">Search</string>
+    <string name="random">Random</string>
+    <string name="generate_random_number">Generate Random Numbers</string>
 </resources>

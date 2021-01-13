@@ -15,11 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarMATE">
+        <activity android:name=".RandomActivity"></activity>
         <activity
             android:name=".AddActivity"
-            android:label="@string/title_activity_add"></activity>
-
-       <!-- <uses-library
+            android:label="@string/title_activity_add" />
+        <!--
+ <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
         <!-
