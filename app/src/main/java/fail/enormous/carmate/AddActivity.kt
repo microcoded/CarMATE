@@ -66,7 +66,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     ) {
 
         // Do to item if position selected is not the default (blank value)
-       /* if (position != 0) {
+        /* if (position != 0) {
             // Set value of name selected in lowercase
             // var cartype: String = resources.getStringArray(R.array.type_array)[position].toLowerCase(Locale.ROOT) // tolowercase in English because it's technically better to do so
         } */
@@ -107,64 +107,65 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             goToMainActivity()
 
             return true
-        }
-        catch (t: Throwable) {
+        } catch (t: Throwable) {
             Log.w("Error:", t.toString())
             return false
         }
     }
 
-    fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal) {
-        // TODO: make this function not wipe the JSON file but instead add to it.
-
-        // val carlist: List<String> = listOf(brand, model, year.toString(), color, type, price.toString())
-        // var carlist: CarList = CarList(brand, model, year, color, type, price)
-
-
+    private fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal) {
         // Put data into JSON array, with love from https://stackoverflow.com/questions/65591615/how-do-i-output-data-as-a-json-array-in-kotlin-on-android
         // After reading comments, I wrote my own answer to my question on this site.
 
-        var carlist = mutableListOf(
+        val carlist = mutableListOf(
                 Car(brand, model, year, color, type, price)
         )
 
-        // Read file
-        val jsonFileString = getJsonDataFromAsset(applicationContext, "carlist.json", )
-        Log.w("Data", jsonFileString)
+        // If the file exists, read from it! If not, don't do anything.
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "carlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
 
-        // Gson
-        val gson = Gson()
-        val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
 
-        // Convert JSON data to Kotlin array
-        val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
-        cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
-
-        // Add previous items into JSON array
-        for(i in cars.indices) {
-            Log.w("Array for loop, i =", i.toString())
-            // Get each value from created array
-            val brand = cars[i].brand
-            val model = cars[i].model
-            val year = cars[i].year
-            val color = cars[i].color
-            val type = cars[i].type
-            val price = cars[i].price
-            // Add it onto the MutableList
-            // Documentation for the below: https://kotlinlang.org/docs/reference/collection-write.html
-            carlist.add(Car(brand, model, year, color, type, price))
+                // Convert JSON data to Kotlin array, if the file exists
+                val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+                // Add previous items into JSON array
+                for (i in cars.indices) {
+                    Log.w("Array for loop, i =", i.toString())
+                    // Get each value from created array
+                    val brand = cars[i].brand
+                    val model = cars[i].model
+                    val year = cars[i].year
+                    val color = cars[i].color
+                    val type = cars[i].type
+                    val price = cars[i].price
+                    // Add it onto the MutableList
+                    // Documentation for the below: https://kotlinlang.org/docs/reference/collection-write.html
+                    carlist.add(Car(brand, model, year, color, type, price))
+                }
+            }
         }
 
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
         saveJSON(newCarInfo)
+
     }
 
     private fun getJsonDataFromAsset(context: Context, fileName: String): String? {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         val jsonString: String
         try {
-            //jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
-            jsonString = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), fileName).bufferedReader().use { it.readText() }
+            jsonString = File(storageDir, fileName).bufferedReader().use { it.readText() }
         } catch (ioException: IOException) {
             ioException.printStackTrace()
             return null

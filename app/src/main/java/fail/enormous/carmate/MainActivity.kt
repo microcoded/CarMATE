@@ -11,6 +11,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fail.enormous.carmate.RecyclerItemClickListener.SimpleOnItemClickListener
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
-
         // TODO: Check if this setting improves performance and doesn't cause bugs
         // mRecyclerView!!.setHasFixedSize(true)
 
@@ -42,6 +42,15 @@ class MainActivity : AppCompatActivity() {
         mAdapter = RecyclerAdapter(this, viewItems)
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
+
+        // Check RecyclerItemClickListener.java for the source of this code
+        mRecyclerView!!.addOnItemTouchListener(RecyclerItemClickListener(this, OnItemClickListener()))
+    }
+
+    private class OnItemClickListener : SimpleOnItemClickListener() {
+        override fun onItemClick(childView: View, position: Int) {
+            Log.w("RecyclerView Click", "pos = $position")
+        }
     }
 
     private fun addItemsFromJSON() {
@@ -79,18 +88,15 @@ class MainActivity : AppCompatActivity() {
             val fileName = "carlist.json"
             val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
             if (storageDir != null) {
+                // Make the directory if it doesn't exist
                 if (!storageDir.exists()){
                     storageDir.mkdir()
                 }
             }
             var jsonString: String? = null
-            //inputStream =
             val bufferedReader = File(storageDir, fileName).bufferedReader()
-            // Open the JSON file
-            //inputStream = resources.openRawResource(R.raw.sample_data)
-            // resources.openRawResource(R.raw.sample_data).also { inputStream = it }
-            // Reading the file
-            //val bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+
+            // Reading data per line, appending it to builder
             while (bufferedReader.readLine().also { jsonString = it } != null) {
                 // Appending string information from the file to the builder
                 builder.append(jsonString)
@@ -114,7 +120,6 @@ class MainActivity : AppCompatActivity() {
 
     // When the SOLD button is pressed
     fun soldButtonPress(view: View) {
-        // startActivity(Intent(this, SoldActivity::class.java))
         startActivity()
     }
 
@@ -132,18 +137,18 @@ class MainActivity : AppCompatActivity() {
         builder.setSingleChoiceItems(listItems, checkedItem, DialogInterface.OnClickListener { dialog, which ->
             // Toast.makeText(this, "Position: " + which + " Value: " + listItems[which], Toast.LENGTH_LONG).show()
 
-        }  )
+        })
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
             dialog.dismiss()
-        }   )
+        })
         // Display the dialogue
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    fun startActivity() {
+    private fun startActivity() {
         val i = Intent(this, SoldActivity::class.java)
         val options = ActivityOptions.makeSceneTransitionAnimation(this)
         startActivity(i, options.toBundle())
