@@ -2,6 +2,7 @@ package fail.enormous.carmate
 
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
@@ -15,11 +16,10 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
-import java.io.Writer
+import com.google.gson.reflect.TypeToken
+import java.io.*
 import java.math.BigDecimal
 
 class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -103,6 +103,8 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             Log.w("Content", "$brandContent, $modelContent, $yearContent, $colorContent, $typeContent, $priceContent")
 
+            getCurrentJSON()
+
             addCarToJSON(brandContent, modelContent, yearContent, colorContent, typeContent, priceContent)
             goToMainActivity()
 
@@ -112,6 +114,33 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             Log.w("Error:", t.toString())
             return false
         }
+    }
+
+    fun getCurrentJSON() {
+        // Read file
+        val jsonFileString = getJsonDataFromAsset(applicationContext, "carlist.json", )
+        Log.w("Data", jsonFileString)
+
+        // Gson
+        val gson = Gson()
+        val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+        // Convert JSON data to Kotlin array
+        var cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+        cars.forEachIndexed { idx, car -> Log.w("Data2", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+
+    }
+
+    fun getJsonDataFromAsset(context: Context, fileName: String): String? {
+        val jsonString: String
+        try {
+            //jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+            jsonString = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), fileName).bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            return null
+        }
+        return jsonString
     }
 
     fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal) {
