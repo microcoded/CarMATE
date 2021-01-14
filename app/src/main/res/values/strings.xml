@@ -25,4 +25,7 @@
     <string name="search">Search</string>
     <string name="random">Random</string>
     <string name="generate_random_number">Generate Random Numbers</string>
+    <string name="max_min_warning">Make sure that the range (max - min) is bigger than or equal to the amount.</string>
+    <string name="min_max_error">Make sure that the max value is higher than the minimum.</string>
+    <string name="random_blank">Make sure all numbers have been entered.</string>
 </resources>

@@ -21,4 +21,7 @@
     <string name="search">探索</string>
     <string name="random">乱数列</string>
     <string name="generate_random_number">乱数を生成する</string>
+    <string name="min_max_error">最大値が最小値よりも大きいことを確認してください。</string>
+    <string name="max_min_warning">範囲（max - min）がAmount以上であることを確認してください。</string>
+    <string name="random_blank">すべての数字が入力されていることを確認してください。</string>
 </resources>

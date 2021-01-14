@@ -7,6 +7,16 @@
     tools:context=".RandomActivity">
 
     <TextView
+        android:id="@+id/amountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Amount"
+        app:layout_constraintStart_toEndOf="@+id/maxEditText"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
+    <TextView
         android:id="@+id/randomText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +27,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="36sp"
         android:typeface="normal"
+        android:scrollbars = "vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,19 +38,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:backgroundTint="#FF9800"
         android:onClick="generateRandomNumbers"
         android:text="@string/generate_random_number"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+        app:layout_constraintTop_toBottomOf="@+id/maxEditText" />
 
     <TextView
         android:id="@+id/randomTextView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:text="Your unique random numbers will be displayed here."
@@ -47,4 +60,67 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generate_button" />
+
+    <EditText
+        android:id="@+id/minEditText"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF9800"
+        android:ems="10"
+        android:hint="0"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/minTextView"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
+    <EditText
+        android:id="@+id/maxEditText"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF9800"
+        android:ems="10"
+        android:hint="0"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/maxTextView"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
+    <EditText
+        android:id="@+id/amountEditText"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF9800"
+        android:ems="10"
+        android:hint="0"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/amountTextView"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
+    <TextView
+        android:id="@+id/minTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="min"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
+    <TextView
+        android:id="@+id/maxTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="max"
+        app:layout_constraintStart_toEndOf="@+id/minEditText"
+        app:layout_constraintTop_toBottomOf="@+id/randomText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

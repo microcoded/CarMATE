@@ -94,10 +94,11 @@
 
     <Button
         android:id="@+id/randomButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
+        android:backgroundTint="#FF9800"
         android:onClick="randomButtonPress"
         android:text="@string/random"
         android:textColor="@android:color/white"
