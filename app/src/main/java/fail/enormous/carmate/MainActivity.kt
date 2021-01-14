@@ -123,21 +123,36 @@ class MainActivity : AppCompatActivity() {
         // The title of the dialogue box
         builder.setTitle(R.string.select_sort)
         // Set the selected item to the first in the list, as a default
-        var checkedItem = 0
+        val checkedItem = 0
 
         // Do something when an item is pressed
         builder.setSingleChoiceItems(listItems, checkedItem, DialogInterface.OnClickListener { dialog, which ->
             // Toast.makeText(this, "Position: " + which + " Value: " + listItems[which], Toast.LENGTH_LONG).show()
-
         })
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
+            var selectedSort = listItems[which]
+            sortItems(selectedSort)
             dialog.dismiss()
         })
         // Display the dialogue
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun sortItems(sort: String) {
+        // Read data
+
+        if (sort == "Bubble") {
+            // Insert bubble sort code
+        }
+        if (sort == "Selection") {
+            // Insert selection sort code
+        }
+        if (sort == "Insertion") {
+            // Insert insertion sort code
+        }
     }
 
     private fun startActivity() {
@@ -161,7 +176,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun searchButtonPress(view: View) {
-
+        /* TODO: Linear and binary searching
+         */
     }
 
     fun randomButtonPress(view: View) {
