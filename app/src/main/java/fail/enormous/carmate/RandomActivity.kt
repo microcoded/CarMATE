@@ -36,7 +36,6 @@ class RandomActivity : AppCompatActivity() {
     }
 
     fun generateRandomNumbers(view: View) {
-        // TODO: Grab min and max from user inputs, max - min cannot be < numbers
         val minEditText = this.findViewById<EditText>(R.id.minEditText)
         val maxEditText = this.findViewById<EditText>(R.id.maxEditText)
         val amountEditText = this.findViewById<EditText>(R.id.amountEditText)
