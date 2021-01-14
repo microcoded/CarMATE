@@ -47,9 +47,10 @@ class RandomActivity : AppCompatActivity() {
         if (minEditText.text.toString() != "" && maxEditText.text.toString() != "" && amountEditText.text.toString() != "") {
 
             val min = minEditText.text.toString().toInt()
-            val max = maxEditText.text.toString().toInt()
+            var max = maxEditText.text.toString().toInt()
             var numbers = amountEditText.text.toString().toInt()
             numbers += 1 // Increment numbers by 1, simplifying loops
+            max += 1 // The same
 
             if (max == min || min > max) {
                 // Warning if minimum is not greater than maximum
@@ -61,7 +62,7 @@ class RandomActivity : AppCompatActivity() {
                 ).show()
             }
 
-            else if (max - min >= numbers) {
+            else if (max - min >= numbers - 3) {
                 // Clear text view
                 randomTextView.setText("")
 
@@ -87,6 +88,7 @@ class RandomActivity : AppCompatActivity() {
 
             }
             else {
+                // if (max - min) is too large
                 Toast.makeText(
                     applicationContext,
                     getString(R.string.max_min_warning),
@@ -95,6 +97,7 @@ class RandomActivity : AppCompatActivity() {
             }
         }
         else {
+            // If any input is empty
             Toast.makeText(
                 applicationContext,
                 getString(R.string.random_blank),
