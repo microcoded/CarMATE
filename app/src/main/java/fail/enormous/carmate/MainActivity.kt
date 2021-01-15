@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONException
-import java.io.File
-import java.io.IOException
-import java.io.InputStream
+import java.io.*
 import java.util.*
 
 
@@ -120,6 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     // When the SORT button is pressed
     fun sortButtonPress(view: View) {
+        var chosen = 0
         // Array of values to display in the list
         val listItems = arrayOf("Bubble", "Selection", "Insertion")
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
@@ -130,13 +130,14 @@ class MainActivity : AppCompatActivity() {
 
         // Do something when an item is pressed
         builder.setSingleChoiceItems(listItems, checkedItem, DialogInterface.OnClickListener { dialog, which ->
-            // Toast.makeText(this, "Position: " + which + " Value: " + listItems[which], Toast.LENGTH_LONG).show()
+             chosen = which
         })
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
             dialog.dismiss()
-            val selectedSort = listItems[which]
+            // val selectedSort = listItems[which]  --> this grabs the select button as -1, so no :(
+            val selectedSort = listItems[chosen]
             sortItems(selectedSort)
         })
         // Display the dialogue
@@ -145,6 +146,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sortItems(sort: String) {
+        // Definining a blank MutableList for holding data to be put into JSON
+        val carlist = mutableListOf<Car>()
         // Reading the file
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         val filename = "carlist.json"
@@ -196,7 +199,7 @@ class MainActivity : AppCompatActivity() {
                     // Insert insertion sort code
                 }
 
-                val carlist = mutableListOf<Car>()
+
 
                 // Saving the sorted data
                 for (i in cars.indices) {
@@ -214,7 +217,34 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val newCarInfo: String = gsonPretty.toJson(carlist)
+        saveJSON(newCarInfo)
+    }
 
+    private fun saveJSON(jsonString: String) {
+        val output: Writer
+        val file = createFile()
+        output = BufferedWriter(FileWriter(file))
+        output.write(jsonString)
+        output.close()
+    }
+
+    private fun createFile(): File {
+        // Save as carlist.json in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
+        val fileName = "carlist.json"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        if (storageDir != null) {
+            if (!storageDir.exists()){
+                // Make folder if nonexistent
+                storageDir.mkdir()
+            }
+        }
+
+        return File(
+                storageDir,
+                fileName
+        )
     }
 
     private fun getJsonDataFromAsset(context: Context, fileName: String): String? {
