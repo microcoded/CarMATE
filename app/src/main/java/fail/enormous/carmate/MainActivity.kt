@@ -2,6 +2,7 @@ package fail.enormous.carmate
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
@@ -132,9 +135,9 @@ class MainActivity : AppCompatActivity() {
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
-            var selectedSort = listItems[which]
-            sortItems(selectedSort)
             dialog.dismiss()
+            val selectedSort = listItems[which]
+            sortItems(selectedSort)
         })
         // Display the dialogue
         val dialog: AlertDialog = builder.create()
@@ -142,17 +145,88 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sortItems(sort: String) {
-        // Read data
+        // Reading the file
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "carlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
 
-        if (sort == "Bubble") {
-            // Insert bubble sort code
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+                /*
+                for (i in cars.indices) {
+                    Log.w("Array for loop, i =", i.toString())
+                    // Get each value from created array
+                    val brand = cars[i].brand
+                    val model = cars[i].model
+                    val year = cars[i].year
+                    val color = cars[i].color
+                    val type = cars[i].type
+                    val price = cars[i].price
+                }
+                 */
+
+                if (sort == "Bubble") {
+                    var sorted = false
+                    while (!sorted) {
+                        sorted = true
+                        for (j in cars.indices) {
+                            if (cars[j + 1].price < cars[j].price) {
+                                val temp = cars[j + 1]
+                                cars[j + 1] = cars[j]
+                                cars[j] = temp
+                            }
+                        }
+                    }
+                }
+
+                if (sort == "Selection") {
+                    // Insert selection sort code
+                }
+                if (sort == "Insertion") {
+                    // Insert insertion sort code
+                }
+
+                val carlist = mutableListOf<Car>()
+
+                // Saving the sorted data
+                for (i in cars.indices) {
+                    Log.w("Array for loop, i =", i.toString())
+                    // Get each value from sorted array
+                    val brand = cars[i].brand
+                    val model = cars[i].model
+                    val year = cars[i].year
+                    val color = cars[i].color
+                    val type = cars[i].type
+                    val price = cars[i].price
+                    // Add it onto the MutableList
+                    carlist.add(Car(brand, model, year, color, type, price))
+                }
+
+            }
         }
-        if (sort == "Selection") {
-            // Insert selection sort code
+
+    }
+
+    private fun getJsonDataFromAsset(context: Context, fileName: String): String? {
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val jsonString: String
+        try {
+            jsonString = File(storageDir, fileName).bufferedReader().use { it.readText() }
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            return null
         }
-        if (sort == "Insertion") {
-            // Insert insertion sort code
-        }
+        return jsonString
     }
 
     private fun startActivity() {
