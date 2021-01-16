@@ -179,16 +179,33 @@ class MainActivity : AppCompatActivity() {
                  */
 
                 if (sort == "Bubble") {
-                    var sorted = false
+                   /* var sorted = false
                     while (!sorted) {
                         sorted = true
-                        for (j in cars.indices) {
-                            if (cars[j + 1].price < cars[j].price) {
+                        for (j in 0 until cars.size - 1) {
+                            if (cars[j + 1].price.toDouble() < cars[j].price.toDouble()) {
                                 val temp = cars[j + 1]
                                 cars[j + 1] = cars[j]
                                 cars[j] = temp
                             }
                         }
+                    } */
+
+                    var swapped = true
+                    var pass = 0
+                    while (swapped) {
+                        swapped = false
+                        var comparison = 0
+                        while (comparison < cars.size - 1 - pass) {
+                            if (cars[comparison].price > cars[comparison + 1].price) {
+                                val temp = cars[comparison + 1]
+                                cars[comparison + 1] = cars[comparison]
+                                cars[comparison] = temp
+                                swapped = true
+                            }
+                            comparison += 1
+                        }
+                        pass += 1
                     }
                 }
 
@@ -198,8 +215,6 @@ class MainActivity : AppCompatActivity() {
                 if (sort == "Insertion") {
                     // Insert insertion sort code
                 }
-
-
 
                 // Saving the sorted data
                 for (i in cars.indices) {
@@ -217,9 +232,15 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
+        // Save the new JSON
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
         saveJSON(newCarInfo)
+
+        // Reload the RecyclerView
+        addItemsFromJSON()
+        mAdapter!!.notifyDataSetChanged()
     }
 
     private fun saveJSON(jsonString: String) {
