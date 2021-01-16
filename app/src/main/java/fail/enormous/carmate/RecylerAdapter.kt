@@ -12,11 +12,11 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Setting values for all the TextViews
         val brand: TextView = itemView.findViewById<View>(R.id.brand) as TextView
-        // val model: TextView = itemView.findViewById<View>(R.id.model) as TextView
         val year: TextView = itemView.findViewById<View>(R.id.year) as TextView
         val color: TextView = itemView.findViewById<View>(R.id.color) as TextView
         val type: TextView = itemView.findViewById<View>(R.id.type) as TextView
         val price: TextView = itemView.findViewById<View>(R.id.price) as TextView
+        val plate : TextView = itemView.findViewById<View>(R.id.plate) as TextView
 
     }
 
@@ -48,12 +48,8 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
                 itemViewHolder.color.setText(context.getString(R.string.color_title, carlist.color.capitalize()))
                 itemViewHolder.type.setText(context.getString(R.string.type_title, carlist.type.capitalize()))
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
-                /* itemViewHolder.brand.setText(carlist.brand)
-                itemViewHolder.model.setText(carlist.model)
-                itemViewHolder.year.setText(carlist.year)
-                itemViewHolder.color.setText(carlist.color)
-                itemViewHolder.type.setText(carlist.type)
-                itemViewHolder.price.setText(carlist.price) */
+                itemViewHolder.plate.setText(context.getString(R.string.plate_title, carlist.plate))
+
             }
             else -> {
                 val itemViewHolder = viewHolder as ItemViewHolder
@@ -63,6 +59,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
                 itemViewHolder.color.setText(context.getString(R.string.color_title, carlist.color.capitalize()))
                 itemViewHolder.type.setText(context.getString(R.string.type_title, carlist.type.capitalize()))
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
+                itemViewHolder.plate.setText(context.getString(R.string.plate_title, carlist.plate))
             }
         }
     }

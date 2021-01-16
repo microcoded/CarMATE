@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity() {
                 val color = itemObj.getString("color")
                 val type = itemObj.getString("type")
                 val price = itemObj.getDouble("price").toBigDecimal()
-                val carlist = Car(brand, model, year, color, type, price)
+                val plate = itemObj.getString("plate")
+                val carlist = Car(brand, model, year, color, type, price, plate)
                 viewItems.add(carlist)
             }
         }
@@ -164,7 +165,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Convert JSON data to Kotlin array, if the file exists
                 val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
-                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
 
                 if (sort == 0) {
                     // Bubble sort (Price, lowest first)
@@ -204,6 +205,7 @@ class MainActivity : AppCompatActivity() {
                         pass += 1
                     }
                 }
+
                 if (sort == 2) {
                     // Insert insertion sort code
                 }
@@ -218,8 +220,9 @@ class MainActivity : AppCompatActivity() {
                     val color = cars[i].color
                     val type = cars[i].type
                     val price = cars[i].price
+                    val plate = cars[i].plate
                     // Add it onto the MutableList
-                    carlist.add(Car(brand, model, year, color, type, price))
+                    carlist.add(Car(brand, model, year, color, type, price, plate))
                 }
 
             }

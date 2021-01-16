@@ -5,7 +5,8 @@
     "year": 2016,
     "color": "red",
     "type": "SUV",
-    "price": 27798
+    "price": 27798,
+    "plate": "CE98OP"
   },
   {
     "brand": "Mitsubishi",
@@ -13,7 +14,8 @@
     "year": 2010,
     "color": "grey",
     "type": "sedan",
-    "price": 10999
+    "price": 10999,
+    "plate": "JSON"
   },
   {
     "brand": "Chrysler",
@@ -21,7 +23,8 @@
     "year": 2018,
     "color": "grey",
     "type": "sedan",
-    "price": 62985
+    "price": 62985,
+    "plate": "EE00AA"
   },
   {
     "brand": "Toyota",
@@ -29,7 +32,8 @@
     "year": 2007,
     "color": "white",
     "type": "sedan",
-    "price": 9999
+    "price": 9999,
+    "plate": "FF68BD"
   },
   {
     "brand": "Tesla",
@@ -37,7 +41,8 @@
     "year": 2017,
     "color": "blue",
     "type": "SUV",
-    "price": 88888
+    "price": 88888,
+    "plate": "TES98"
   },
   {
     "brand": "Honda",
@@ -45,7 +50,8 @@
     "year": 2007,
     "color": "blue",
     "type": "SUV",
-    "price": 10001
+    "price": 10001,
+    "plate": "1"
   },
   {
     "brand": "Toyota",
@@ -53,7 +59,8 @@
     "year": 2016,
     "color": "black",
     "type": "4WD",
-    "price": 35000
+    "price": 35000,
+    "plate": "PAM028"
   },
   {
     "brand": "Tesla",
@@ -61,6 +68,7 @@
     "year": 2020,
     "color": "red",
     "type": "sedan",
-    "price": 135420
+    "price": 135420,
+    "plate": "PP309A"
   }
 ]

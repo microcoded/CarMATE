@@ -92,6 +92,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val colorInput = this.findViewById<EditText>(R.id.color_input)
             val typeInput = this.findViewById<Spinner>(R.id.type_spinner)
             val priceInput = this.findViewById<EditText>(R.id.price_input)
+            val plateInput = this.findViewById<EditText>(R.id.plate_input)
 
             // Grabbing data from input
             val brandContent = brandInput.text.toString().toLowerCase().capitalize()
@@ -100,10 +101,11 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val colorContent = colorInput.text.toString().toLowerCase()
             val typeContent = typeInput.selectedItem.toString()
             val priceContent = priceInput.text.toString().toBigDecimal()
+            val plateContent = plateInput.text.toString().toUpperCase()
 
-            Log.w("Content", "$brandContent, $modelContent, $yearContent, $colorContent, $typeContent, $priceContent")
+            Log.w("Content", "$brandContent, $modelContent, $yearContent, $colorContent, $typeContent, $priceContent, $plateContent")
 
-            addCarToJSON(brandContent, modelContent, yearContent, colorContent, typeContent, priceContent)
+            addCarToJSON(brandContent, modelContent, yearContent, colorContent, typeContent, priceContent, plateContent)
             goToMainActivity()
 
             return true
@@ -113,12 +115,12 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal) {
+    private fun addCarToJSON(brand: String, model: String, year: Int, color: String, type: String, price: BigDecimal, plate: String) {
         // Put data into JSON array, with love from https://stackoverflow.com/questions/65591615/how-do-i-output-data-as-a-json-array-in-kotlin-on-android
         // After reading comments, I wrote my own answer to my question on this site.
 
         val carlist = mutableListOf(
-                Car(brand, model, year, color, type, price)
+                Car(brand, model, year, color, type, price, plate)
         )
 
         // If the file exists, read from it! If not, don't do anything.
@@ -137,7 +139,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                 // Convert JSON data to Kotlin array, if the file exists
                 val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
-                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
                 // Add previous items into JSON array
                 for (i in cars.indices) {
                     Log.w("Array for loop, i =", i.toString())
@@ -148,9 +150,10 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     val color = cars[i].color
                     val type = cars[i].type
                     val price = cars[i].price
+                    val plate = cars[i].plate
                     // Add it onto the MutableList
                     // Documentation for the below: https://kotlinlang.org/docs/reference/collection-write.html
-                    carlist.add(Car(brand, model, year, color, type, price))
+                    carlist.add(Car(brand, model, year, color, type, price, plate))
                 }
             }
         }

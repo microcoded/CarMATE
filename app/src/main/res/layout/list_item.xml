@@ -54,6 +54,14 @@
             android:textSize="18sp"
             android:paddingBottom="2dp" />
 
+        <TextView
+            android:id="@+id/plate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/plate_title"
+            android:textSize="18sp"
+            android:paddingBottom="2dp" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
