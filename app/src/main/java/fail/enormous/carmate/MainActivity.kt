@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity() {
                     // Year (newest first), insertion sort
                     var currentItem = 0
                     while (currentItem <= cars.size - 1) {
-                        var currentDataItem = cars[currentItem]
+                        val currentDataItem = cars[currentItem]
                         var comparison = 0
                         var finish = false
                         while (comparison < currentItem && !finish) {
