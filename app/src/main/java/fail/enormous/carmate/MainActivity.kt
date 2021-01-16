@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     fun sortButtonPress(view: View) {
         var chosen = 0
         // Array of values to display in the list
-        val listItems = arrayOf("Price (lowest first) [Bubble]", "Price (highest first) [Selection]", "Insertion")
+        val listItems = arrayOf("Price (lowest first) [Bubble]", "Price (highest first) [Selection]", "Year (newest first) [Insertion]")
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         // The title of the dialogue box
         builder.setTitle(R.string.select_sort)
@@ -207,7 +207,26 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 if (sort == 2) {
-                    // Insert insertion sort code
+                    // Year (newest first), insertion sort
+                    var currentItem = 0
+                    while (currentItem <= cars.size - 1) {
+                        var currentDataItem = cars[currentItem]
+                        var comparison = 0
+                        var finish = false
+                        while (comparison < currentItem && !finish) {
+                            if (currentDataItem.year > cars[comparison].year) {
+                                var shuffleItem = currentItem
+                                while (shuffleItem > comparison) {
+                                    cars[shuffleItem] = cars[shuffleItem - 1]
+                                    shuffleItem -= 1
+                                }
+                                cars[comparison] = currentDataItem
+                                finish = true
+                            }
+                            comparison += 1
+                        }
+                        currentItem += 1
+                    }
                 }
 
                 // Saving the sorted data
