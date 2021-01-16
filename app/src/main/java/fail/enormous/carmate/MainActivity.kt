@@ -18,12 +18,13 @@ import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.*
+import java.math.BigDecimal
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private var mRecyclerView: RecyclerView? = null
-    private val viewItems: MutableList<Any> = ArrayList()
+    private var viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
 
@@ -31,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
-
-        // TODO: Check if this setting improves performance and doesn't cause bugs
-        // mRecyclerView!!.setHasFixedSize(true)
 
         // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)
@@ -121,7 +119,7 @@ class MainActivity : AppCompatActivity() {
     fun sortButtonPress(view: View) {
         var chosen = 0
         // Array of values to display in the list
-        val listItems = arrayOf("Bubble", "Selection", "Insertion")
+        val listItems = arrayOf("Price (lowest first) [Bubble]", "Price (highest first) [Selection]", "Insertion")
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         // The title of the dialogue box
         builder.setTitle(R.string.select_sort)
@@ -130,22 +128,24 @@ class MainActivity : AppCompatActivity() {
 
         // Do something when an item is pressed
         builder.setSingleChoiceItems(listItems, checkedItem, DialogInterface.OnClickListener { dialog, which ->
-             chosen = which
+            chosen = which
         })
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(R.string.select, DialogInterface.OnClickListener { dialog, which ->
             dialog.dismiss()
             // val selectedSort = listItems[which]  --> this grabs the select button as -1, so no :(
-            val selectedSort = listItems[chosen]
-            sortItems(selectedSort)
+            //val selectedSort = listItems[chosen]
+           // sortItems(selectedSort)
+            Log.w("chosen", chosen.toString())
+            sortItems(chosen)
         })
         // Display the dialogue
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun sortItems(sort: String) {
+    private fun sortItems(sort: Int) {
         // Definining a blank MutableList for holding data to be put into JSON
         val carlist = mutableListOf<Car>()
         // Reading the file
@@ -165,32 +165,9 @@ class MainActivity : AppCompatActivity() {
                 // Convert JSON data to Kotlin array, if the file exists
                 val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
                 cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}") }
-                /*
-                for (i in cars.indices) {
-                    Log.w("Array for loop, i =", i.toString())
-                    // Get each value from created array
-                    val brand = cars[i].brand
-                    val model = cars[i].model
-                    val year = cars[i].year
-                    val color = cars[i].color
-                    val type = cars[i].type
-                    val price = cars[i].price
-                }
-                 */
 
-                if (sort == "Bubble") {
-                   /* var sorted = false
-                    while (!sorted) {
-                        sorted = true
-                        for (j in 0 until cars.size - 1) {
-                            if (cars[j + 1].price.toDouble() < cars[j].price.toDouble()) {
-                                val temp = cars[j + 1]
-                                cars[j + 1] = cars[j]
-                                cars[j] = temp
-                            }
-                        }
-                    } */
-
+                if (sort == 0) {
+                    // Bubble sort (Price, lowest first)
                     var swapped = true
                     var pass = 0
                     while (swapped) {
@@ -209,10 +186,25 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                if (sort == "Selection") {
-                    // Insert selection sort code
+                if (sort == 1) {
+                    // Selection sort (Price, highest first)
+                    var pass = 0
+                    while (pass < cars.size - 1) {
+                        var count = pass + 1
+                        var maximum = pass
+                        while (count <= cars.size - 1) {
+                            if (cars[count].price > cars[maximum].price) {
+                                maximum = count
+                            }
+                            count += 1
+                        }
+                        val temp = cars[maximum]
+                        cars[maximum] = cars[pass]
+                        cars[pass] = temp
+                        pass += 1
+                    }
                 }
-                if (sort == "Insertion") {
+                if (sort == 2) {
                     // Insert insertion sort code
                 }
 
@@ -239,8 +231,23 @@ class MainActivity : AppCompatActivity() {
         saveJSON(newCarInfo)
 
         // Reload the RecyclerView
+        /* viewItems = ArrayList()
         addItemsFromJSON()
-        mAdapter!!.notifyDataSetChanged()
+        mAdapter!!.notifyDataSetChanged() */
+
+        finish()
+        overridePendingTransition(0, 0)
+        startActivity(getIntent())
+        overridePendingTransition(0, 0)
+
+    }
+
+    private fun findMaxPrice(arr: Array<Car>): BigDecimal {
+        var max = arr[0].price
+        for (i in arr.indices) {
+            if (arr[i].price > max) max = arr[i].price
+        }
+        return max
     }
 
     private fun saveJSON(jsonString: String) {
@@ -310,3 +317,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
