@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarMATE">
-        <activity android:name=".RandomActivity"></activity>
+        <activity android:name=".BinarySearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".LinearSearchActivity" />
+        <activity android:name=".RandomActivity" />
         <activity
             android:name=".AddActivity"
             android:label="@string/title_activity_add" />

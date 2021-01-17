@@ -30,4 +30,7 @@
     <string name="random_blank">Make sure all numbers have been entered.</string>
     <string name="plate_title">Plate: %1$s</string>
     <string name="plate">Plate</string>
+    <string name="search_linear">Search (Linear)</string>
+    <string name="search_binary">Search (Binary)</string>
+    <string name="no_results">No results</string>
 </resources>

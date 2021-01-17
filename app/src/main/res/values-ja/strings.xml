@@ -26,4 +26,7 @@
     <string name="random_blank">すべての数字が入力されていることを確認してください。</string>
     <string name="plate_title">ナンバー：%1$s</string>
     <string name="plate">ナンバー</string>
+    <string name="no_results">データがないんです</string>
+    <string name="search_linear" translatable="false">線形検索</string>
+    <string name="search_binary">バイナリ検索</string>
 </resources>

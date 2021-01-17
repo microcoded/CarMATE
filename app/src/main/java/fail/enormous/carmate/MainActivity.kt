@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
+        this.mRecyclerView = findViewById<View>(R.id.linearSearchRecycler) as RecyclerView
 
         // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)
@@ -74,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @Throws(IOException::class)
     private fun readJSONDataFromFile(): String {
         var inputStream: InputStream? = null
         val builder = StringBuilder()
@@ -386,8 +385,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun searchButtonPress(view: View) {
-        /* TODO: Linear and binary searching
-         */
+        startActivity(Intent(this, SearchActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     fun randomButtonPress(view: View) {
