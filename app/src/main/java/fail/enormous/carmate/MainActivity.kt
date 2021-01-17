@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestStoragePermission() {
+        // Dexter library https://github.com/Karumi/Dexter
         Dexter.withContext(this)
                 .withPermissions(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
