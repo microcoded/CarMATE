@@ -20,6 +20,7 @@ import org.json.JSONException
 import java.io.*
 import java.math.BigDecimal
 import java.util.*
+import kotlin.random.Random
 
 
 class MainActivity : AppCompatActivity() {
@@ -120,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     fun sortButtonPress(view: View) {
         var chosen = 0
         // Array of values to display in the list
-        val listItems = arrayOf("Price (lowest first) [Bubble]", "Price (highest first) [Selection]", "Year (newest first) [Insertion]")
+        val listItems = arrayOf("Price (lowest first) [Bubble]", "Price (highest first) [Selection]", "Year (newest first) [Insertion]", "Year (oldest first) [Selection]", "Random")
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         // The title of the dialogue box
         builder.setTitle(R.string.select_sort)
@@ -137,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
             // val selectedSort = listItems[which]  --> this grabs the select button as -1, so no :(
             //val selectedSort = listItems[chosen]
-           // sortItems(selectedSort)
+            // sortItems(selectedSort)
             Log.w("chosen", chosen.toString())
             sortItems(chosen)
         })
@@ -229,6 +230,57 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                if (sort == 3) {
+                    // Year (oldest first), selection sort
+                    var pass = 0
+                    while (pass < cars.size - 1) {
+                        var count = pass + 1
+                        var minimum = pass
+                        while (count <= cars.size - 1) {
+                            if (cars[count].year < cars[minimum].year) {
+                                minimum = count
+                            }
+                            count += 1
+                        }
+                        val temp = cars[minimum]
+                        cars[minimum] = cars[pass]
+                        cars[pass] = temp
+                        pass += 1
+                    }
+                }
+
+                if (sort == 4) {
+                    // Random sort with unique random values
+                    // Initialise arrays
+                    val taken = BooleanArray(cars.size + 1) { false }
+                    val cars2: Array<Car> = gson.fromJson(jsonFileString, arrayCarType) // This array is the same as cars
+
+                    // Set all used values of array as false
+                    for (i in 0 until cars.size + 1) {
+                        taken[i] = false
+                    }
+
+                    // Generate unique random numbers and sort cars2 by them, according to cars
+                    for (i in cars.indices) {
+                        var chosen = Random.nextInt(0, cars.size)
+
+                        while (taken[chosen]) {
+                            chosen = Random.nextInt(0, cars.size)
+                        }
+
+                        taken[chosen] = true
+
+                        // Set each value of cars2 (starting at 0) as a unique random index of cars
+                        Log.w("for i in cars.indices", "i=$i, chosen=$chosen")
+                        cars2[i] = cars[chosen]
+                    }
+
+                    // Make cars2 identical to cars
+                    for (i in cars.indices) {
+                        cars[i] = cars2[i]
+                    }
+                }
+
                 // Saving the sorted data
                 for (i in cars.indices) {
                     Log.w("Array for loop, i =", i.toString())
@@ -253,10 +305,6 @@ class MainActivity : AppCompatActivity() {
         saveJSON(newCarInfo)
 
         // Reload the RecyclerView
-        /* viewItems = ArrayList()
-        addItemsFromJSON()
-        mAdapter!!.notifyDataSetChanged() */
-
         finish()
         overridePendingTransition(0, 0)
         startActivity(getIntent())

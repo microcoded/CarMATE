@@ -69,7 +69,7 @@ class RandomActivity : AppCompatActivity() {
                 // Initialise array
                 val taken = BooleanArray(max) { false }
 
-                // Set first 200 values of array as false
+                // Set all used values of array as false
                 for (i in min until max) {
                     taken[i] = false
                 }
