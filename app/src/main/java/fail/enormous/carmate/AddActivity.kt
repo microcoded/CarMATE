@@ -34,7 +34,7 @@ class AddActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun setAnimation() {
         val slide = Slide()
-        slide.setSlideEdge(Gravity.RIGHT)
+        slide.setSlideEdge(Gravity.BOTTOM)
         slide.setDuration(200)
         slide.setInterpolator(DecelerateInterpolator())
         getWindow().setExitTransition(slide)

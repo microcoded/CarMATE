@@ -304,12 +304,20 @@ class MainActivity : AppCompatActivity() {
         val newCarInfo: String = gsonPretty.toJson(carlist)
         saveJSON(newCarInfo)
 
-        // Reload the RecyclerView
+        // Refresh the RecyclerView
+        //reloadActivity()
+        viewItems.clear()
+        mAdapter!!.notifyDataSetChanged()
+        mAdapter = RecyclerAdapter(this, viewItems)
+        mRecyclerView!!.adapter = mAdapter
+        addItemsFromJSON()
+    }
+
+    private fun reloadActivity() {
         finish()
         overridePendingTransition(0, 0)
         startActivity(getIntent())
         overridePendingTransition(0, 0)
-
     }
 
     private fun findMaxPrice(arr: Array<Car>): BigDecimal {
