@@ -1,5 +1,6 @@
 package fail.enormous.carmate
 
+import android.Manifest
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Context
@@ -15,6 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.*
@@ -32,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        requestStoragePermission() // Without storage, this app doesn't work
         this.mRecyclerView = findViewById<View>(R.id.linearSearchRecycler) as RecyclerView
 
         // Using a linear layout manager
@@ -44,6 +51,21 @@ class MainActivity : AppCompatActivity() {
         addItemsFromJSON()
 
         // TODO: on clicking an item on recyclerview
+    }
+
+    private fun requestStoragePermission() {
+        Dexter.withContext(this)
+                .withPermissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.MANAGE_DOCUMENTS
+                ).withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) { /* ... */
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest?>?, token: PermissionToken?) { /* ... */
+                    }
+                }).check()
     }
 
     private fun addItemsFromJSON() {
