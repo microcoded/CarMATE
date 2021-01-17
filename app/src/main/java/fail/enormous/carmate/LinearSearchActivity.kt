@@ -63,7 +63,7 @@ class LinearSearchActivity : AppCompatActivity() {
         searchButtonPress(search_input)
     }
 
-    fun searchButtonPress(search_input: EditText) {
+    private fun searchButtonPress(search_input: EditText) {
         hideKeyboard()
         val search_text = search_input.text.toString()
         linearSearch(search_text)
@@ -145,7 +145,7 @@ class LinearSearchActivity : AppCompatActivity() {
     }
 
     private fun createFile(): File {
-        // Save as in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
+        // Save in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
         val fileName = "searchResults.json"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         if (storageDir != null) {

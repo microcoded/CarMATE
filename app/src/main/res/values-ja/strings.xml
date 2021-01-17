@@ -29,4 +29,5 @@
     <string name="no_results">データがないんです</string>
     <string name="search_linear" translatable="false">線形検索</string>
     <string name="search_binary">バイナリ検索</string>
+    <string name="search_for">～の検索</string>
 </resources>
