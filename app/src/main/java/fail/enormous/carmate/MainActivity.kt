@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +55,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestStoragePermission() {
-        // Dexter library https://github.com/Karumi/Dexter
+        // Dexter library implementation for requesting permissions - https://github.com/Karumi/Dexter
+        // This makes it very easy!
         Dexter.withContext(this)
                 .withPermissions(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -64,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) { /* ... */
                     }
 
-                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest?>?, token: PermissionToken?) { /* ... */
+                    override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest?>?, token: PermissionToken?) {
+                        Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT).show()
                     }
                 }).check()
     }

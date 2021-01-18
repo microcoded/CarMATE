@@ -65,7 +65,7 @@ class LinearSearchActivity : AppCompatActivity() {
 
     private fun searchButtonPress(search_input: EditText) {
         hideKeyboard()
-        val search_text = search_input.text.toString()
+        val search_text = search_input.text.toString().toLowerCase()
         linearSearch(search_text)
     }
 
@@ -96,10 +96,10 @@ class LinearSearchActivity : AppCompatActivity() {
                     )
                 }
 
-                // Linear search algorithm
+                // Linear search algorithm - not case sensitive!
                 var somethingFound = false // Checking if something at all is found
                 for (i in cars.indices) {
-                    if (cars[i].color == query || cars[i].brand == query || cars[i].model == query || cars[i].plate == query || cars[i].year.toString() == query || cars[i].price.toString() == query || cars[i].type == query) {
+                    if (cars[i].color.toLowerCase() == query || cars[i].brand.toLowerCase() == query || cars[i].model.toLowerCase() == query || cars[i].plate.toLowerCase() == query || cars[i].year.toString() == query || cars[i].price.toString() == query || cars[i].type.toLowerCase() == query) {
                         carlist.add(Car(cars[i].brand, cars[i].model, cars[i].year, cars[i].color, cars[i].type, cars[i].price, cars[i].plate))
                         somethingFound = true // Something was found!
                     }
@@ -124,7 +124,7 @@ class LinearSearchActivity : AppCompatActivity() {
                     // Display a "No results" toast
                     Toast.makeText(
                         applicationContext,
-                        getString(R.string.no_results),
+                        getString(R.string.permissions_none),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
