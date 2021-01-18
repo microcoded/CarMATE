@@ -29,8 +29,7 @@ import java.math.BigDecimal
 import java.util.*
 import kotlin.random.Random
 
-
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
     private var mRecyclerView: RecyclerView? = null
     private var viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
@@ -47,11 +46,123 @@ class MainActivity : AppCompatActivity() {
         mRecyclerView!!.layoutManager = layoutManager
 
         // Specifying adapter
-        mAdapter = RecyclerAdapter(this, viewItems)
+        mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
+    }
 
-        // TODO: on clicking an item on recyclerview
+    // When an item is clicked in the RecyclerView
+    override fun onCellClickListener(pos: Int) {
+        Log.w("RecyclerPos", pos.toString())
+
+        // Read JSON file
+        val filename = "carlist.json"
+        val gson = Gson()
+        val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+        val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+
+        // Convert JSON data to Kotlin array, if the file exists
+        val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+        Log.w("RecyclerData", "> Item ${pos}:\n${cars}\nBrand: ${cars[pos].brand}\nColor: ${cars[pos].color}\nModel: ${cars[pos].model}\nPrice: ${cars[pos].price}\nType: ${cars[pos].type}\nYear: ${cars[pos].year}\nPlate: ${cars[pos].plate}")
+
+        // Present dialogue
+        deleteOrSoldDialogue(cars, pos)
+    }
+
+    private fun deleteOrSoldDialogue(cars: Array<Car>, pos: Int) {
+        var chosen = 0
+        // Array of values to display in the list
+        val listItems = arrayOf(getString(R.string.mark_as_sold), getString(R.string.delete))
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        // The title of the dialogue box
+        builder.setTitle("${cars[pos].brand} ${cars[pos].model}")
+        // Set the selected item to the first in the list, as a default
+        val checkedItem = -1
+
+        // Do something when an item is pressed
+        builder.setSingleChoiceItems(
+                listItems,
+                checkedItem,
+                DialogInterface.OnClickListener { dialog, which ->
+                    chosen = which
+                })
+
+        // Do something when dialogue is confirmed
+        builder.setPositiveButton(
+                R.string.select,
+                DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                    Log.w("chosen", chosen.toString())
+
+                    // First, clear RecyclerView
+                    viewItems.clear()
+                    mAdapter!!.notifyDataSetChanged()
+                    mAdapter = RecyclerAdapter(this, viewItems, this)
+                    mRecyclerView!!.adapter = mAdapter
+
+                    // Delete and move to sold functions
+                    if (chosen == 0) soldCar(cars, pos)
+                    if (chosen == 1) deleteCar(cars, pos)
+
+                })
+        // Display the dialogue
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun deleteCar(cars: Array<Car>, pos: Int) {
+        // Definining a blank MutableList for holding data to be put into JSON
+        // Reading the file
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "carlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
+
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                var cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car ->
+                    Log.w(
+                            "Data from JSON file",
+                            "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}"
+                    )
+                }
+
+                // Delete the car in pos and remove all spaces
+                val carlist = remove(cars, pos)
+
+                // Save new data
+                val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+                val searchResults: String = gsonPretty.toJson(carlist)
+                saveJSON(searchResults)
+
+                // Display new items
+                addItemsFromJSON()
+            }
+        }
+    }
+
+    private fun remove(arr: Array<Car>, index: Int): MutableList<Car> {
+        // If the item we are trying to remove doesn't exist, return the array back as a MutableList
+        if (index < 0 || index >= arr.size) {
+            return arr.toMutableList()
+        }
+        // Convert the array to a MutableList with the item removed
+        val result = arr.toMutableList()
+        result.removeAt(index)
+        return result
+    }
+
+
+    private fun soldCar(cars: Array<Car>, pos: Int) {
+
     }
 
     private fun requestStoragePermission() {
@@ -191,7 +302,7 @@ class MainActivity : AppCompatActivity() {
 
                 // Convert JSON data to Kotlin array, if the file exists
                 val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
-                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
 
                 if (sort == 0) {
                     // Bubble sort (Price, lowest first)
@@ -333,7 +444,7 @@ class MainActivity : AppCompatActivity() {
         //reloadActivity()
         viewItems.clear()
         mAdapter!!.notifyDataSetChanged()
-        mAdapter = RecyclerAdapter(this, viewItems)
+        mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
     }

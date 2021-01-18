@@ -35,4 +35,6 @@
     <string name="no_results">No results</string>
     <string name="search_for">Search for</string>
     <string name="permissions_none">Please go to your device settings and grant CarMATE storage permissions.</string>
+    <string name="mark_as_sold">Mark as sold</string>
+    <string name="delete">Delete</string>
 </resources>

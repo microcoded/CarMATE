@@ -1,5 +1,6 @@
 package fail.enormous.carmate
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 
-class RecyclerAdapter(private val context: Context, private val listRecyclerItem: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RecyclerAdapter(private val context: Context, private val listRecyclerItem: List<Any>, private val cellClickListener: CellClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // Setting values for all the TextViews
         val brand: TextView = itemView.findViewById<View>(R.id.brand) as TextView
@@ -19,6 +20,7 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
         val plate : TextView = itemView.findViewById<View>(R.id.plate) as TextView
 
     }
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): RecyclerView.ViewHolder {
         return when (i) {
@@ -35,6 +37,8 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
         }
     }
 
+
+    @SuppressLint("StringFormatMatches")
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, i: Int) {
         val viewType = getItemViewType(i)
         when (viewType) {
@@ -50,6 +54,9 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
                 itemViewHolder.plate.setText(context.getString(R.string.plate_title, carlist.plate))
 
+                itemViewHolder.itemView.setOnClickListener {
+                    cellClickListener.onCellClickListener(i)
+                }
             }
             else -> {
                 val itemViewHolder = viewHolder as ItemViewHolder
@@ -60,6 +67,10 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
                 itemViewHolder.type.setText(context.getString(R.string.type_title, carlist.type.capitalize()))
                 itemViewHolder.price.setText(context.getString(R.string.price_title, "$" + carlist.price))
                 itemViewHolder.plate.setText(context.getString(R.string.plate_title, carlist.plate))
+
+                itemViewHolder.itemView.setOnClickListener {
+                    cellClickListener.onCellClickListener(i)
+                }
             }
         }
     }
@@ -82,4 +93,11 @@ class RecyclerAdapter(private val context: Context, private val listRecyclerItem
     companion object {
         private const val TYPE = 1
     }
+
+    interface CellClickListener {
+        fun onCellClickListener(pos: Int)
+    }
+
 }
+
+

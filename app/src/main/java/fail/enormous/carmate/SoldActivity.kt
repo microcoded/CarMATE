@@ -17,7 +17,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
-class SoldActivity : AppCompatActivity() {
+class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
     private var mRecyclerView: RecyclerView? = null
     private val viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
@@ -39,7 +39,7 @@ class SoldActivity : AppCompatActivity() {
         mRecyclerView!!.layoutManager = layoutManager
 
         // Specifying adapter
-        mAdapter = RecyclerAdapter(this, viewItems)
+        mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
     }
@@ -119,5 +119,9 @@ class SoldActivity : AppCompatActivity() {
         slide.setInterpolator(DecelerateInterpolator())
         getWindow().setExitTransition(slide)
         getWindow().setEnterTransition(slide)
+    }
+
+    override fun onCellClickListener(pos: Int) {
+        // Do nothing
     }
 }

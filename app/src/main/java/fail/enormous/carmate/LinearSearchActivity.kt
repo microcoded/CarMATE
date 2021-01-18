@@ -23,7 +23,7 @@ import org.json.JSONException
 import java.io.*
 import java.util.*
 
-class LinearSearchActivity : AppCompatActivity() {
+class LinearSearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
     private var mRecyclerView: RecyclerView? = null
     private var viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
@@ -41,7 +41,7 @@ class LinearSearchActivity : AppCompatActivity() {
         mRecyclerView!!.layoutManager = layoutManager
 
         // Specifying adapter
-        mAdapter = RecyclerAdapter(this, viewItems)
+        mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
 
         // Invoke onDone function when the search button on the keyboard is pressed.
@@ -108,7 +108,7 @@ class LinearSearchActivity : AppCompatActivity() {
                 // First, clear RecyclerView
                 viewItems.clear()
                 mAdapter!!.notifyDataSetChanged()
-                mAdapter = RecyclerAdapter(this, viewItems)
+                mAdapter = RecyclerAdapter(this, viewItems, this)
                 mRecyclerView!!.adapter = mAdapter
 
                 if (somethingFound) {
@@ -251,6 +251,10 @@ class LinearSearchActivity : AppCompatActivity() {
     // Tags for error handling
     companion object {
         private const val TAG = "LinearSearchActivity"
+    }
+
+    override fun onCellClickListener(pos: Int) {
+        // Do nothing
     }
 
 

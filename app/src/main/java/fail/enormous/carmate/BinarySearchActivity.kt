@@ -26,7 +26,7 @@ import java.io.*
 import java.math.BigDecimal
 import java.util.*
 
-class BinarySearchActivity : AppCompatActivity() {
+class BinarySearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
     private var mRecyclerView: RecyclerView? = null
     private var viewItems: MutableList<Any> = ArrayList()
     private var mAdapter: RecyclerView.Adapter<*>? = null
@@ -45,7 +45,7 @@ class BinarySearchActivity : AppCompatActivity() {
         mRecyclerView!!.layoutManager = layoutManager
 
         // Specifying adapter
-        mAdapter = RecyclerAdapter(this, viewItems)
+        mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
 
         // Invoke onDone function when the search button on the keyboard is pressed.
@@ -109,9 +109,9 @@ class BinarySearchActivity : AppCompatActivity() {
         builder.setSingleChoiceItems(
             listItems,
             checkedItem,
-            DialogInterface.OnClickListener { dialog, which ->
-                chosen = which
-            })
+                { dialog, which ->
+                    chosen = which
+                })
 
         // Do something when dialogue is confirmed
         builder.setPositiveButton(
@@ -212,7 +212,7 @@ class BinarySearchActivity : AppCompatActivity() {
                 // First, clear RecyclerView
                 viewItems.clear()
                 mAdapter!!.notifyDataSetChanged()
-                mAdapter = RecyclerAdapter(this, viewItems)
+                mAdapter = RecyclerAdapter(this, viewItems, this)
                 mRecyclerView!!.adapter = mAdapter
 
                 if (found) {
@@ -336,6 +336,10 @@ class BinarySearchActivity : AppCompatActivity() {
             storageDir,
             fileName
         )
+    }
+
+    override fun onCellClickListener(pos: Int) {
+        // Do nothing
     }
 
 }

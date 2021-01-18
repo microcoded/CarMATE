@@ -31,4 +31,6 @@
     <string name="search_binary">バイナリ検索</string>
     <string name="search_for">～の検索</string>
     <string name="permissions_none">デバイスの設定に移動して、CarMATEのストレージのパーミッションを許可してください。</string>
+    <string name="mark_as_sold">売上高に移る</string>
+    <string name="delete">削除</string>
 </resources>
