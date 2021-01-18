@@ -79,8 +79,10 @@ class BinarySearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListe
 
     private fun searchButtonPress(search_input: EditText) {
         hideKeyboard()
-        val search_text = search_input.text.toString().toBigDecimal()
-        binarySearchDialogue(search_text)
+        // Check if input is blank to avoid crashing
+        if (search_input.text.toString() != "") { val search_text = search_input.text?.toString()?.toBigDecimal()
+            binarySearchDialogue(search_text)
+        }
     }
 
     private fun hideKeyboard() {
@@ -89,10 +91,10 @@ class BinarySearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListe
         inputMethodManager.hideSoftInputFromWindow(
             currentFocus?.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
-        )
+            )
     }
 
-    private fun binarySearchDialogue(target: BigDecimal) {
+    private fun binarySearchDialogue(target: BigDecimal?) {
         // Display a dialogue, because we need to perform a sort before we perform a binary search.
         // This will search for year or price
 
@@ -109,7 +111,7 @@ class BinarySearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListe
         builder.setSingleChoiceItems(
             listItems,
             checkedItem,
-                { dialog, which ->
+            DialogInterface.OnClickListener { dialog, which ->
                     chosen = which
                 })
 
@@ -126,7 +128,7 @@ class BinarySearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListe
         dialog.show()
     }
 
-    private fun sortItems(chosen: Int, target: BigDecimal) {
+    private fun sortItems(chosen: Int, target: BigDecimal?) {
         // Definining a blank MutableList for holding data to be put into JSON
         val carlist = mutableListOf<Car>()
         // Reading the file
