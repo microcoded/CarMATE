@@ -124,7 +124,7 @@ class LinearSearchActivity : AppCompatActivity() {
                     // Display a "No results" toast
                     Toast.makeText(
                         applicationContext,
-                        getString(R.string.permissions_none),
+                        getString(R.string.no_results),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onPermissionRationaleShouldBeShown(permissions: List<PermissionRequest?>?, token: PermissionToken?) {
-                        Toast.makeText(applicationContext, "", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, R.string.permissions_none, Toast.LENGTH_SHORT).show()
                     }
                 }).check()
     }
