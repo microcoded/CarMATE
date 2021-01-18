@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         // Specifying adapter
         mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
-        refreshRecycler()
         addItemsFromJSON()
+        refreshRecycler()
     }
 
     // When an item is clicked in the RecyclerView
