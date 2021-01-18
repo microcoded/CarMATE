@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestStoragePermission() // Without storage, this app doesn't work
-        this.mRecyclerView = findViewById<View>(R.id.linearSearchRecycler) as RecyclerView
+        this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
         // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         // Specifying adapter
         mAdapter = RecyclerAdapter(this, viewItems, this)
         mRecyclerView!!.adapter = mAdapter
+        refreshRecycler()
         addItemsFromJSON()
     }
 
@@ -523,6 +524,10 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
 
         // Refresh the RecyclerView
         //reloadActivity()
+        refreshRecycler()
+    }
+
+    private fun refreshRecycler() {
         viewItems.clear()
         mAdapter!!.notifyDataSetChanged()
         mAdapter = RecyclerAdapter(this, viewItems, this)

@@ -34,7 +34,7 @@ class LinearSearchActivity : AppCompatActivity(), RecyclerAdapter.CellClickListe
         setContentView(R.layout.activity_linear_search)
         setAnimation()
 
-        this.mRecyclerView = findViewById<View>(R.id.linearSearchRecycler) as RecyclerView
+        this.mRecyclerView = findViewById<View>(R.id.mainRecycler) as RecyclerView
 
         // Using a linear layout manager
         layoutManager = LinearLayoutManager(this)

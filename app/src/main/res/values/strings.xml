@@ -37,4 +37,5 @@
     <string name="permissions_none">Please go to your device settings and grant CarMATE storage permissions.</string>
     <string name="mark_as_sold">Mark as sold</string>
     <string name="delete">Delete</string>
+    <string name="unmark_as_sold">Unmark as sold</string>
 </resources>

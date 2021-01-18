@@ -1,8 +1,10 @@
 package fail.enormous.carmate
 
+import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.transition.Slide
@@ -158,7 +160,7 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
     private fun deleteDialogue(cars: Array<Car>, pos: Int) {
         var chosen = 0
         // Array of values to display in the list
-        val listItems = arrayOf(getString(R.string.delete))
+        val listItems = arrayOf(getString(R.string.delete), getString(R.string.unmark_as_sold))
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         // The title of the dialogue box
         builder.setTitle("${cars[pos].brand} ${cars[pos].model}")
@@ -188,6 +190,7 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
 
                     // Delete and move to sold functions
                     if (chosen == 0) deleteCar(cars, pos)
+                    if (chosen == 1) mainCar(cars, pos)
 
                 })
         // Display the dialogue
@@ -226,7 +229,7 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
                 // Save new data
                 val gsonPretty = GsonBuilder().setPrettyPrinting().create()
                 val searchResults: String = gsonPretty.toJson(carlist)
-                saveJSON(searchResults)
+                saveJSON(searchResults, filename)
 
                 // Display new items
                 addItemsFromJSON()
@@ -245,17 +248,100 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         return result
     }
 
-    private fun saveJSON(jsonString: String) {
+    private fun mainCar(cars: Array<Car>, pos: Int) {
+        // Definining a blank MutableList for holding data to be put into original JSON
+        // Reading the file
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "soldlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
+
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                var cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car ->
+                    Log.w(
+                            "Data from JSON file",
+                            "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}"
+                    )
+                }
+
+                addItemToMain(cars[pos], storageDir)
+
+                // Delete the car in pos and remove all spaces
+                val carlist = remove(cars, pos)
+
+                // Save new data
+                val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+                val searchResults: String = gsonPretty.toJson(carlist)
+                saveJSON(searchResults, filename)
+
+                // Display new items
+                addItemsFromJSON()
+            }
+        }
+    }
+
+    private fun addItemToMain(car: Car, storageDir: File?) {
+        // Mutablelist with our added car in it
+        val carlist = mutableListOf(car)
+
+        // If the file exists, read from it! If not, don't do anything.
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "carlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
+
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
+                // Add previous items into JSON array
+                for (i in cars.indices) {
+                    Log.w("Array for loop, i =", i.toString())
+                    // Get each value from created array
+                    val brand = cars[i].brand
+                    val model = cars[i].model
+                    val year = cars[i].year
+                    val color = cars[i].color
+                    val type = cars[i].type
+                    val price = cars[i].price
+                    val plate = cars[i].plate
+                    // Add it onto the MutableList
+                    // Documentation for the below: https://kotlinlang.org/docs/reference/collection-write.html
+                    carlist.add(Car(brand, model, year, color, type, price, plate))
+                }
+            }
+        }
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val newCarInfo: String = gsonPretty.toJson(carlist)
+        saveJSON(newCarInfo, filename)
+    }
+
+    private fun saveJSON(jsonString: String, fileName: String) {
         val output: Writer
-        val file = createFile()
+        val file = createFile(fileName)
         output = BufferedWriter(FileWriter(file))
         output.write(jsonString)
         output.close()
     }
 
-    private fun createFile(): File {
+    private fun createFile(fileName: String): File {
         // Save as soldlist.json in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
-        val fileName = "soldlist.json"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         if (storageDir != null) {
             if (!storageDir.exists()){
@@ -454,7 +540,7 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         // Save the new JSON
         val gsonPretty = GsonBuilder().setPrettyPrinting().create()
         val newCarInfo: String = gsonPretty.toJson(carlist)
-        saveJSON(newCarInfo)
+        saveJSON(newCarInfo, filename)
 
         // Refresh the RecyclerView
         //reloadActivity()
@@ -464,4 +550,9 @@ class SoldActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         mRecyclerView!!.adapter = mAdapter
         addItemsFromJSON()
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, MainActivity::class.java), ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+    }
+
 }
