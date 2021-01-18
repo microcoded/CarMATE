@@ -162,8 +162,89 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
 
 
     private fun soldCar(cars: Array<Car>, pos: Int) {
+        // Definining a blank MutableList for holding data to be put into original JSON
+        // Reading the file
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "carlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
 
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                var cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car ->
+                    Log.w(
+                            "Data from JSON file",
+                            "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}"
+                    )
+                }
+
+                addItemToSold(cars[pos], storageDir)
+
+                // Delete the car in pos and remove all spaces
+                val carlist = remove(cars, pos)
+
+                // Save new data
+                val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+                val searchResults: String = gsonPretty.toJson(carlist)
+                saveJSON(searchResults)
+
+                // Display new items
+                addItemsFromJSON()
+            }
+        }
     }
+
+    private fun addItemToSold(car: Car, storageDir: File?) {
+        // Mutablelist with our added car in it
+        val carlist = mutableListOf(car)
+
+        // If the file exists, read from it! If not, don't do anything.
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        val filename = "soldlist.json"
+        val file = File(storageDir, filename)
+        if (file.exists()) {
+            // Read file
+            val jsonFileString = getJsonDataFromAsset(applicationContext, filename)
+            if (jsonFileString != "z") {
+                Log.w("Data", jsonFileString.toString())
+
+                // Gson
+                val gson = Gson()
+                val arrayCarType = object : TypeToken<Array<Car>>() {}.type
+
+                // Convert JSON data to Kotlin array, if the file exists
+                val cars: Array<Car> = gson.fromJson(jsonFileString, arrayCarType)
+                cars.forEachIndexed { idx, car -> Log.w("Data from JSON file", "> Item ${idx}:\n${car}\nBrand: ${car.brand}\nColor: ${car.color}\nModel: ${car.model}\nPrice: ${car.price}\nType: ${car.price}\nType: ${car.type}\nYear: ${car.year}\nPlate: ${car.plate}") }
+                // Add previous items into JSON array
+                for (i in cars.indices) {
+                    Log.w("Array for loop, i =", i.toString())
+                    // Get each value from created array
+                    val brand = cars[i].brand
+                    val model = cars[i].model
+                    val year = cars[i].year
+                    val color = cars[i].color
+                    val type = cars[i].type
+                    val price = cars[i].price
+                    val plate = cars[i].plate
+                    // Add it onto the MutableList
+                    // Documentation for the below: https://kotlinlang.org/docs/reference/collection-write.html
+                    carlist.add(Car(brand, model, year, color, type, price, plate))
+                }
+            }
+        }
+        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+        val newCarInfo: String = gsonPretty.toJson(carlist)
+        saveJSONSold(newCarInfo)
+    }
+
 
     private fun requestStoragePermission() {
         // Dexter library implementation for requesting permissions - https://github.com/Karumi/Dexter
@@ -472,9 +553,34 @@ class MainActivity : AppCompatActivity(), RecyclerAdapter.CellClickListener {
         output.close()
     }
 
+    private fun saveJSONSold(jsonString: String) {
+        val output: Writer
+        val file = createFileSold()
+        output = BufferedWriter(FileWriter(file))
+        output.write(jsonString)
+        output.close()
+    }
+
     private fun createFile(): File {
         // Save as carlist.json in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
         val fileName = "carlist.json"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+        if (storageDir != null) {
+            if (!storageDir.exists()){
+                // Make folder if nonexistent
+                storageDir.mkdir()
+            }
+        }
+
+        return File(
+                storageDir,
+                fileName
+        )
+    }
+
+    private fun createFileSold(): File {
+        // Save as soldlist.json in /sdcard/Android/data/fail.enormous.carmate/files/Documents/
+        val fileName = "soldlist.json"
         val storageDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
         if (storageDir != null) {
             if (!storageDir.exists()){
