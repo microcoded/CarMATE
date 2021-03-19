@@ -1,2 +1,2 @@
 # CarMATE
-For school :)
+JSON file-based car inventory system for Android
